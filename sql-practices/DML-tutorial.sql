@@ -1,0 +1,39 @@
+-- Basic Query
+
+create table pet(
+	name varchar(20),
+    owner varchar(20),
+    species varchar(20),
+    gender char(1),
+    birth DATE,
+    death DATE
+);
+
+-- scheme 확인
+desc pet;
+
+
+-- 조회
+select name, owner, species, gender, birth, death from pet;
+
+-- 삭제
+delete from pet where name='댕댕';
+
+-- 데이터 넣기 (생성, create)
+insert 
+	into pet
+    value('알알이', '진우', '술마시면개됨', 'm', '1111-11-11', null);
+
+-- load data local infile
+load data local infile 'c:\\pet.txt' into table pet;
+
+-- update death
+update pet set death=null where name != 'Bowser';
+
+-- 조건 where
+--- Gwen과 함께사는 아이들은?
+select name, species, owner from pet where owner = 'Gwen';
+
+--- null 다루기 1 : 살아있는 애들은?
+select name from pet where death is null;
+
