@@ -9,11 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bookmall.vo.OrderBook;
+import bookmall.vo.OrderBookDto;
 import bookmall.vo.OrderDto;
 
 public class OrderBookDao {
-	public List<OrderDto> findAll() {
-		List<OrderDto> result = new ArrayList<OrderDto>();
+	public List<OrderBookDto> findAll() {
+		List<OrderBookDto> result = new ArrayList<OrderBookDto>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -22,29 +23,25 @@ public class OrderBookDao {
 			conn = getConnection();
 
 			// 3. SQL 준비
-			String sql = "select o.orderno, m.name, m.email, o.total_price, o.address "
-					+ "from bookmall.order o, member m "
-					+ "where o.member_no = m.no";
+			String sql = "select b.no, b.title, ob.count "
+					+ "from book b, order_book ob "
+					+ "where b.no = ob.book_no ";
 			pstmt = conn.prepareStatement(sql);
 
 			// 5. SQL 실행
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				String orderNo = rs.getString(1);
-				String name = rs.getString(2);
-				String email = rs.getString(3);
-				int totalPrice = rs.getInt(4);
-				String address = rs.getString(5);
+				Long bookNo = rs.getLong(1);
+				String title = rs.getString(2);
+				int count = rs.getInt(3);
 				
-				OrderDto orderDto = new OrderDto();
-				orderDto.setOrderNo(orderNo);
-				orderDto.setName(name);
-				orderDto.setEmail(email);
-				orderDto.setTotalPrice(totalPrice);
-				orderDto.setAddress(address);
-
-				result.add(orderDto);
+				
+				OrderBookDto orderbookDto = new OrderBookDto();
+				orderbookDto.setBookNo(bookNo);;
+				orderbookDto.setTitle(title);
+				orderbookDto.setCount(count);
+				result.add(orderbookDto);
 			}
 
 		} catch (SQLException e) {

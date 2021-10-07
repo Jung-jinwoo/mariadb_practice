@@ -15,6 +15,7 @@ import bookmall.vo.Category;
 import bookmall.vo.Member;
 import bookmall.vo.Order;
 import bookmall.vo.OrderBook;
+import bookmall.vo.OrderBookDto;
 import bookmall.vo.OrderDto;
 
 public class BookMall {
@@ -24,13 +25,14 @@ public class BookMall {
 		//insertBook();
 		//insertCart();
 		//insertOrder();
-		insertOrderBook();
+		//insertOrderBook();
 		
 		displayBookInfo();
 		displayCategoryInfo();
 		displayMemberInfo();
 		displayCartInfo();
 		dispalyOrderInfo();
+		displayOrderBookInfo();
 	} //main
 
 	
@@ -38,18 +40,18 @@ public class BookMall {
 		OrderBookDao orderBookDao = new OrderBookDao();
 		OrderBook orderbook = null;
 
-		//orderbook = new OrderBook();
-		//orderbook.setCount(3);
-		//orderbook.setSalePrice(67500);
-		//orderbook.setBookNo(2L);
-		//orderbook.setOrderNo(1L);
-		//orderBookDao.insert(orderbook);
+		orderbook = new OrderBook();
+		orderbook.setCount(4);
+		orderbook.setSalePrice(54000);
+		orderbook.setBookNo(1L);
+		orderbook.setOrderNo(1L);
+		orderBookDao.insert(orderbook);
 		
 		orderbook = new OrderBook();
 		orderbook.setCount(2);
-		orderbook.setSalePrice(27000);
-		orderbook.setBookNo(1L);
-		orderbook.setOrderNo(2L);
+		orderbook.setSalePrice(45000);
+		orderbook.setBookNo(2L);
+		orderbook.setOrderNo(1L);
 		orderBookDao.insert(orderbook);
 	}
 
@@ -59,7 +61,7 @@ public class BookMall {
 		Order order = null;
 		
 		order = new Order();
-		order.setOrderno("111-111-1111");
+		order.setOrderno("222-222-2222");
 		order.setTotalPrice(40500);
 		order.setAddress("동서대학교 센텀캠퍼스 704호");
 		order.setMemberNo(1L);
@@ -201,12 +203,12 @@ public class BookMall {
 		System.out.println();
 	}
 	
-	private static void displayOrderBook() {
+	private static void displayOrderBookInfo() {
 		System.out.println("****** 주문 도서 정보 출력 ******");
-		List<OrderDto> list = new OrderDao().findAll();
+		List<OrderBookDto> list = new OrderBookDao().findAll();
 		
-		for(OrderDto order : list) {
-			String info = String.format("주문번호: %s, 이름: %s, 이메일: %s, 총 가격: %d, 주소: %s", order.getOrderNo(), order.getName(), order.getEmail(), order.getTotalPrice(), order.getAddress());
+		for(OrderBookDto orderbook : list) {
+			String info = String.format("도서번호: %d, 도서제목: %s, 수량: %d", orderbook.getBookNo(), orderbook.getTitle(), orderbook.getCount());
 			System.out.println(info);
 		}
 		System.out.println();
